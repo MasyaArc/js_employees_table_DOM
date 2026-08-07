@@ -13,52 +13,25 @@ document.addEventListener('click', (e) => {
 
   const columnIndex = tH.cellIndex;
 
-  tH.classList.add('ASC');
-
   const rows = [...tBody.rows];
 
-  if (tH.classList.contains('DESC')) {
-    rows.sort((rowA, rowB) => {
-      let valA = rowA.cells[columnIndex].textContent;
-      let valB = rowB.cells[columnIndex].textContent;
-
-      if (columnIndex === 0 || columnIndex === 1 || columnIndex === 2) {
-        return valB.localeCompare(valA);
-      }
-
-      if (columnIndex === 4) {
-        valA = Number(valA.replaceAll('$', '').replaceAll(',', ''));
-        valB = Number(valB.replaceAll('$', '').replaceAll(',', ''));
-
-        return valB - valA;
-      }
-
-      return Number(valB) - Number(valA);
-    });
-
-    tH.classList.remove('DESC');
-    tH.classList.add('ASC');
-
-    for (const row of rows) {
-      tBody.appendChild(row);
-    }
-  } else {
+  if (tH.classList.contains('ASC')) {
     rows.sort((rowA, rowB) => {
       let valueA = rowA.cells[columnIndex].textContent;
       let valueB = rowB.cells[columnIndex].textContent;
 
       if (columnIndex === 0 || columnIndex === 1 || columnIndex === 2) {
-        return valueA.localeCompare(valueB);
+        return valueB.localeCompare(valueA);
       }
 
       if (columnIndex === 4) {
         valueA = Number(valueA.replaceAll('$', '').replaceAll(',', ''));
         valueB = Number(valueB.replaceAll('$', '').replaceAll(',', ''));
 
-        return valueA - valueB;
+        return valueB - valueA;
       }
 
-      return Number(valueA) - Number(valueB);
+      return Number(valueB) - Number(valueA);
     });
     tH.classList.remove('ASC');
     tH.classList.add('DESC');
@@ -66,6 +39,35 @@ document.addEventListener('click', (e) => {
     for (const row of rows) {
       tBody.appendChild(row);
     }
+
+    return;
+  }
+  // tH.classList.remove('DESC');
+  // tH.classList.add('ASC');
+
+  rows.sort((rowA, rowB) => {
+    let valA = rowA.cells[columnIndex].textContent;
+    let valB = rowB.cells[columnIndex].textContent;
+
+    if (columnIndex === 0 || columnIndex === 1 || columnIndex === 2) {
+      return valA.localeCompare(valB);
+    }
+
+    if (columnIndex === 4) {
+      valA = Number(valA.replaceAll('$', '').replaceAll(',', ''));
+      valB = Number(valB.replaceAll('$', '').replaceAll(',', ''));
+
+      return valA - valB;
+    }
+
+    return Number(valA) - Number(valB);
+  });
+
+  tH.classList.remove('DESC');
+  tH.classList.add('ASC');
+
+  for (const row of rows) {
+    tBody.appendChild(row);
   }
 });
 
@@ -180,13 +182,28 @@ function addNewPersonTable() {
       body.appendChild(notification);
 
       title.textContent = 'Error';
-      p.textContent = 'Age less 18';
+      p.textContent = 'Age less 18 or more 90';
       notification.appendChild(title);
       notification.appendChild(p);
 
       // setTimeout(() => {
       //   notification.remove();
       // }, 1000);
+
+      return;
+    }
+
+    if (form.elements.position.value.trim().length === 0) {
+      notification.className = 'notification';
+
+      notification.classList.add('error');
+      body.appendChild(notification);
+
+      title.textContent = 'Error';
+      p.textContent = 'Position is required';
+
+      notification.appendChild(title);
+      notification.appendChild(p);
 
       return;
     }
