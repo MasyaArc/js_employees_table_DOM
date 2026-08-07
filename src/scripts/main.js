@@ -159,6 +159,10 @@ function addForm() {
 
 function addNewPersonTable() {
   const form = document.querySelector('form');
+
+  form.noValidate = true;
+  form.setAttribute('novalidate', '');
+
   const body = document.querySelector('body');
   const notification = document.createElement('div');
   const title = document.createElement('h2');
@@ -193,7 +197,7 @@ function addNewPersonTable() {
       return;
     }
 
-    if (form.elements.position.value.trim().length === 0) {
+    if (form.elements.position.value.length === 0) {
       notification.className = 'notification';
 
       notification.classList.add('error');
