@@ -176,23 +176,20 @@ function addNewPersonTable() {
   form.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    if (
-      Number(form.elements.age.value) < 18 ||
-      Number(form.elements.age.value) > 90
-    ) {
+    if (form.elements.name.value.length < 4) {
       notification.className = 'notification';
 
       notification.classList.add('error');
       body.appendChild(notification);
 
       title.textContent = 'Error';
-      p.textContent = 'Age less 18 or more 90';
+      p.textContent = 'Name lenght less 4';
       notification.appendChild(title);
       notification.appendChild(p);
 
-      // setTimeout(() => {
-      //   notification.remove();
-      // }, 1000);
+      setTimeout(() => {
+        notification.remove();
+      }, 1000);
 
       return;
     }
@@ -209,23 +206,49 @@ function addNewPersonTable() {
       notification.appendChild(title);
       notification.appendChild(p);
 
+      setTimeout(() => {
+        notification.remove();
+      }, 1000);
+
       return;
     }
 
-    if (form.elements.name.value.length < 4) {
+    if (
+      form.elements.age.value.length === 0 ||
+      Number(form.elements.age.value) < 18 ||
+      Number(form.elements.age.value) > 90
+    ) {
       notification.className = 'notification';
 
       notification.classList.add('error');
       body.appendChild(notification);
 
       title.textContent = 'Error';
-      p.textContent = 'Name lenght less 4';
+      p.textContent = 'Age less 18 or more 90';
       notification.appendChild(title);
       notification.appendChild(p);
 
-      // setTimeout(() => {
-      //   notification.remove();
-      // }, 1000);
+      setTimeout(() => {
+        notification.remove();
+      }, 1000);
+
+      return;
+    }
+
+    if (form.elements.salary.value.length === 0) {
+      notification.className = 'notification';
+
+      notification.classList.add('error');
+      body.appendChild(notification);
+
+      title.textContent = 'Error';
+      p.textContent = 'Salary is required';
+      notification.appendChild(title);
+      notification.appendChild(p);
+
+      setTimeout(() => {
+        notification.remove();
+      }, 1000);
 
       return;
     }
@@ -262,9 +285,9 @@ function addNewPersonTable() {
     notification.appendChild(title);
     notification.appendChild(p);
 
-    // setTimeout(() => {
-    //   notification.remove();
-    // }, 1000);
+    setTimeout(() => {
+      notification.remove();
+    }, 1000);
 
     form.reset();
   });
